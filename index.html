@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Campus Events: descubre y organiza actividades universitarias.">
+  <title>Campus Events | Actividades universitarias</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <nav class="navbar navbar-expand-lg container py-3" aria-label="Navegación principal">
+    <a class="navbar-brand fw-bold" href="#"><span class="brand-mark">C</span> Campus<span class="brand-accent">Events</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+        <li class="nav-item"><a class="nav-link active" href="#explorar">Explorar eventos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#mis-eventos">Mis inscripciones <span id="navCount" class="count-pill">0</span></a></li>
+        <li class="nav-item"><button class="btn btn-primary btn-sm px-3" id="openCreate">+ Crear evento</button></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="live-dot"></span> TU CAMPUS, MÁS CONECTADO</span>
+        <h1>Vive más.<br><span>Conecta en tu campus.</span></h1>
+        <p>Encuentra talleres, charlas, deportes y actividades creadas por la comunidad universitaria.</p>
+        <a class="btn btn-light hero-btn" href="#explorar">Explorar actividades <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-card"><span class="art-icon">✦</span><span class="art-label">IDEAS QUE<br>SE ENCUENTRAN</span><div class="art-people"><i></i><i></i><i></i><i></i></div></div>
+        <div class="floating-tag tag-top">🎨 Creatividad</div><div class="floating-tag tag-bottom">🤝 Comunidad</div>
+      </div>
+    </div>
+  </section>
+  <section class="container section-space" id="explorar">
+    <div class="section-heading">
+      <div><span class="eyebrow muted">AGENDA UNIVERSITARIA</span><h2>Encuentra tu próximo plan</h2><p class="section-subtitle">Actividades para aprender, compartir y pasarlo bien.</p></div>
+      <button class="btn btn-outline-secondary d-none d-md-inline-flex" id="clearFilters">Limpiar filtros <span class="ms-2">↺</span></button>
+    </div>
+    <div class="filter-panel row g-2 align-items-center">
+      <div class="col-12 col-md-5"><label class="visually-hidden" for="searchInput">Buscar evento</label><div class="search-wrap"><span>⌕</span><input id="searchInput" class="form-control" type="search" placeholder="Buscar por evento o lugar..."></div></div>
+      <div class="col-6 col-md-3"><label class="visually-hidden" for="categoryFilter">Categoría</label><select id="categoryFilter" class="form-select"><option value="Todas">Todas las categorías</option><option>Académico</option><option>Deportes</option><option>Arte y cultura</option><option>Comunidad</option><option>Tecnología</option></select></div>
+      <div class="col-6 col-md-2"><label class="visually-hidden" for="dateFilter">Fecha</label><select id="dateFilter" class="form-select"><option value="all">Cualquier fecha</option><option value="upcoming">Próximos 7 días</option></select></div>
+      <div class="col-12 col-md-2"><button class="btn btn-primary w-100" id="searchButton">Buscar eventos</button></div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center results-line"><span id="resultsCount">Mostrando eventos</span><span class="sort-label">Ordenados por fecha ↑</span></div>
+    <div id="eventGrid" class="row g-4" aria-live="polite"></div>
+    <div id="emptyState" class="empty-state d-none"><div class="empty-icon">⌕</div><h3>No encontramos eventos</h3><p>Prueba con otra búsqueda o cambia los filtros.</p><button class="btn btn-outline-primary" id="emptyReset">Ver todos los eventos</button></div>
+  </section>
+  <section class="my-events" id="mis-eventos"><div class="container section-space">
+    <div class="section-heading"><div><span class="eyebrow muted">TU AGENDA PERSONAL</span><h2>Mis inscripciones</h2><p class="section-subtitle">Aquí aparecen las actividades a las que te has unido.</p></div><span class="registered-total" id="registeredTotal">0 eventos</span></div>
+    <div id="registeredList" class="registered-list"></div>
+  </div></section>
+  <section class="container create-cta"><div><span class="eyebrow">¿TIENES UNA IDEA?</span><h2>Haz que algo suceda.</h2><p>Comparte una actividad y reúne a tu comunidad.</p></div><button class="btn btn-light" id="openCreateBottom">Publicar un evento <span class="ms-2">↗</span></button></section>
+</main>
+<footer class="site-footer"><div class="container d-flex flex-column flex-md-row justify-content-between gap-2"><span class="fw-bold">Campus<span class="brand-accent">Events</span></span><span>Hecho para conectar a la comunidad universitaria.</span><span>© 2026 Campus Events</span></div></footer>
+
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><div><span class="eyebrow muted">COMUNIDAD CAMPUS</span><h2 class="modal-title fs-4" id="eventModalTitle">Publicar un evento</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button></div>
+  <form id="eventForm" novalidate><div class="modal-body">
+   <div class="mb-3"><label class="form-label" for="eventName">Nombre del evento *</label><input class="form-control" id="eventName" maxlength="65" required placeholder="Ej. Feria de innovación"><div class="invalid-feedback">Ingresa un nombre (máximo 65 caracteres).</div></div>
+   <div class="row g-3"><div class="col-sm-6"><label class="form-label" for="eventCategory">Categoría *</label><select class="form-select" id="eventCategory" required><option value="">Seleccionar</option><option>Académico</option><option>Deportes</option><option>Arte y cultura</option><option>Comunidad</option><option>Tecnología</option></select><div class="invalid-feedback">Selecciona una categoría.</div></div><div class="col-sm-6"><label class="form-label" for="eventDate">Fecha *</label><input class="form-control" type="date" id="eventDate" required><div class="invalid-feedback">Elige una fecha futura.</div></div></div>
+   <div class="row g-3 mt-0"><div class="col-sm-6"><label class="form-label" for="eventTime">Hora *</label><input class="form-control" type="time" id="eventTime" required><div class="invalid-feedback">Indica la hora.</div></div><div class="col-sm-6"><label class="form-label" for="eventPlace">Lugar *</label><input class="form-control" id="eventPlace" required maxlength="60" placeholder="Ej. Auditorio central"><div class="invalid-feedback">Ingresa el lugar.</div></div></div>
+   <div class="row g-3 mt-0"><div class="col-sm-6"><label class="form-label" for="eventCapacity">Cupos disponibles *</label><input class="form-control" type="number" id="eventCapacity" min="1" max="5000" required placeholder="Ej. 40"><div class="invalid-feedback">Ingresa entre 1 y 5000 cupos.</div></div><div class="col-sm-6"><label class="form-label" for="eventOrganizer">Organiza *</label><input class="form-control" id="eventOrganizer" required maxlength="50" placeholder="Ej. Centro de estudiantes"><div class="invalid-feedback">Indica quién organiza.</div></div></div>
+   <div class="mb-1 mt-3"><label class="form-label" for="eventDescription">Descripción *</label><textarea class="form-control" id="eventDescription" rows="3" maxlength="240" required placeholder="Cuéntanos de qué se trata..."></textarea><div class="invalid-feedback">Escribe una descripción.</div></div>
+   <p class="form-note">* Campos obligatorios. Los eventos se guardan en este navegador.</p>
+   <div id="formMessage" class="alert alert-success d-none mb-0" role="status"></div>
+  </div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button><button class="btn btn-primary" type="submit">Publicar evento</button></div></form>
+ </div></div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3"><div id="appToast" class="toast align-items-center text-bg-dark border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body" id="toastText">Listo</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body></html>
